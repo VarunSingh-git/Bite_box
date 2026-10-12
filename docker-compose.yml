@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.5
+    container_name: bite_box_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - bite_box_pgData:/var/lib/postgresql/data
+    healthcheck:
+      # continusouly check weather postgres db health is ok or not
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  redis:
+    image: redis:7-alpine 
+    container_name: bite_box_redis
+    # restart the container if it's crash or system reboot unless we stop container it wont stop
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+    # host port where container or docker run : redis port where redis run inside container
+      - "6379:6379"
+    volumes:
+      - bite_box_redisData:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  bite_box_pgData:
+  bite_box_redisData:

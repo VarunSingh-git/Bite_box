@@ -1,0 +1,128 @@
+// here we define client provide i.e. (prisma-client-js)
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["postgresqlExtensions"]
+}
+
+// here we define db's provider i.e. (postgresql)
+datasource db {
+    provider   = "postgresql"
+    extensions = [postgis]
+}
+
+enum Role {
+    CUSTOMER
+    OWNER
+    ADMIN
+}
+
+enum OrderStatus {
+    PLACED
+    ACCEPTED
+    PREPRARING
+    OUT_FOR_DELIEVERY
+    DELIVERED
+
+    PENDING_PAYMENT
+    CANCELLED
+}
+
+enum Payment_status {
+    PAYMENT_DONE
+    PAYMENT_PENDING
+    PAYMENT_CANCELLED
+}
+
+model User {
+    id           String        @id @default(cuid())
+    name         String
+    email        String        @unique
+    passwordHash String?
+    image        String?
+    role         Role
+    createdAt    DateTime      @default(now())
+    restaurants  Restaurant[]
+    orderStatus  OrderStatus[]
+    orders       Order[]
+}
+
+model Restaurant {
+    id          String  @id @default(cuid()) // local key
+    ownerId     String // foriegn key
+    owner       User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    name        String
+    description String?
+    address     String?
+    lat         Float
+    long        Float
+
+    location    Unsupported("geography(Point, 4326)")?
+    cuisine     String[]
+    isOpen      Boolean
+    isActive    Boolean                                @default(true)
+    avgPrepMins Int                                    @default(30)
+    createdAt   DateTime                               @default(now())
+    menuItems   MenuItems[]
+    order       Order[]
+}
+
+model MenuItems {
+    id           String      @id @default(cuid())
+    restaurantId String
+    restaurant   Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+    name         String
+    description  String?
+    pricePaise   Float
+    category     String
+    isVeg        Boolean     @default(true)
+    isAvailable  Boolean     @default(true)
+    imageUrl     String?
+    orderItems   OrderItem[]
+
+    @@index([restaurantId])
+}
+
+model Order {
+    id              String      @id @default(cuid())
+    userId          String
+    user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    restaurantId    String
+    restaurant      Restaurant  @relation(fields: [restaurantId], references: [id])
+    status          OrderStatus @default(PENDING_PAYMENT)
+    totalPaise      Float
+    deliveryAddress String
+    deliveryLat     Float
+    deliveryLong    Float
+    createAt        DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    items           OrderItem[]
+    payment         Payment?
+
+    @@index([userId])
+    @@index([restaurantId, status])
+}
+
+model OrderItem {
+    id         String    @id @default(cuid())
+    orderId    String
+    order      Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+    menuItemId String
+    menuItem   MenuItems @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+    name       String
+    pricePaise Int
+    quantity   Int
+
+    @@index([orderId])
+}
+
+model Payment {
+    id                String         @id @default(cuid())
+    orderId           String         @unique
+    order             Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+    razorpayOrderId   String         @unique
+    razorpayPaymentId String?
+    status            Payment_status @default(PAYMENT_PENDING)
+    amountPaise       Float
+    createdAt         DateTime       @default(now())
+    updateAt          DateTime       @updatedAt
+}
