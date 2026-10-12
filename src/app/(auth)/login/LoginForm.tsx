@@ -5,6 +5,7 @@ import { loginAction, type loginState } from "../action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 export function LoginForm() {
     const [state, formAction, pending] = useActionState<loginState, FormData>(
@@ -26,10 +27,9 @@ export function LoginForm() {
 
             <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input
+                <PasswordInput
                     id="password"
                     name="password"
-                    type="password"
                     autoComplete="current-password"
                     required
                     minLength={8}

@@ -16,13 +16,16 @@ export async function registerAction(
 ): Promise<registerState> {
     const parsed = await registeredSchema.safeParse({
         name: formdata.get('name'),
-        mail: formdata.get('email'),
+        email: formdata.get('email'),
         password: formdata.get('password'),
-        image: formdata.get('image'),
+        // image: formdata.get('image'),
         role: formdata.get('role') ?? "CUSTOMER"
     })
     console.log("parsed from action.ts----------------------------", parsed)
-    if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input" }
+    if (!parsed.success) {
+        const issue = parsed.error.issues[0];
+        return { error: `${issue?.path.join(".")}: ${issue?.message}` };
+    }
 
     const { name, email, password, role } = parsed?.data
 

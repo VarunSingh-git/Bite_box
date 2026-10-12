@@ -5,6 +5,7 @@ import { registerAction, type registerState } from "../action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 export function RegisterForm() {
     const [state, formAction, pending] = useActionState<registerState, FormData>(
@@ -38,10 +39,9 @@ export function RegisterForm() {
 
             <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input
+                <PasswordInput
                     id="password"
                     name="password"
-                    type="password"
                     autoComplete="new-password"
                     required
                     minLength={8}

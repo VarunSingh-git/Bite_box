@@ -1,5 +1,5 @@
 // // this is prisma ORM client that is used in write queries
-import { PrismaClient } from "@prisma/client/default"
+import { PrismaClient } from "../generated/client"
 // // this is adpator i.e. used as bridge b/w node-pg and prisma client
 import { PrismaPg } from "@prisma/adapter-pg";
 // // this is connection pooler of node-postgres (pg)
