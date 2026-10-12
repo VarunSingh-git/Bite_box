@@ -5,7 +5,7 @@ import { registerAction, type registerState } from "../action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PasswordInput } from "@/components/ui/PasswordInput";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export function RegisterForm() {
     const [state, formAction, pending] = useActionState<registerState, FormData>(

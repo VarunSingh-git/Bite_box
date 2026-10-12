@@ -3,6 +3,7 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { logoutAction } from "./(auth)/action";
 import { Button } from "@/components/ui/button";
+import { AuthStatusSkeleton } from "@/components/skeletons";
 
 async function AuthStatus() {
   const session = await auth();
@@ -41,7 +42,7 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-orange-50 p-6">
       <h1 className="text-4xl font-bold text-orange-600">Tiffin</h1>
       <p className="text-gray-600">Home-cooked food from kitchens near you.</p>
-      <Suspense fallback={<p className="text-sm text-gray-500">Loading...</p>}>
+      <Suspense fallback={<AuthStatusSkeleton />}>
         <AuthStatus />
       </Suspense>
     </main>

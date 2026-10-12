@@ -5,7 +5,7 @@ import { loginAction, type loginState } from "../action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PasswordInput } from "@/components/ui/PasswordInput";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export function LoginForm() {
     const [state, formAction, pending] = useActionState<loginState, FormData>(

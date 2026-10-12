@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginForm } from "./LoginForm";
+import { AuthStatusSkeleton } from "@/components/skeletons";
 
 type SearchParams = Promise<{ registered?: string }>;
 
@@ -40,7 +41,7 @@ async function LoginContent({ searchParams }: { searchParams: SearchParams }) {
 export default function LoginPage({ searchParams }: { searchParams: SearchParams }) {
     return (
         <main className="flex min-h-screen items-center justify-center bg-orange-50 p-6">
-            <Suspense fallback={<p className="text-sm text-gray-500">Loading...</p>}>
+            <Suspense fallback={<AuthStatusSkeleton />}>
                 <LoginContent searchParams={searchParams} />
             </Suspense>
         </main>

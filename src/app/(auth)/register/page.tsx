@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RegisterForm } from "./RegisterForm";
+import { AuthStatusSkeleton } from "@/components/skeletons";
 
 async function RegisterContent() {
     const session = await auth();
@@ -31,7 +32,7 @@ async function RegisterContent() {
 export default function RegisterPage() {
     return (
         <main className="flex min-h-screen items-center justify-center bg-orange-50 p-6">
-            <Suspense fallback={<p className="text-sm text-gray-500">Loading...</p>}>
+            <Suspense fallback={<AuthStatusSkeleton />}>
                 <RegisterContent />
             </Suspense>
         </main>
