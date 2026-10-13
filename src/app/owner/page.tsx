@@ -18,7 +18,7 @@ export default async function OwnerPage() {
         <main className="mx-auto max-w-3xl space-y-6 p-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-orange-600">My kitchens</h1>
-                <Link href="/owner/restaurant/new" className={buttonVariants()}>
+                <Link href="/owner/restaurants/new" className={buttonVariants()}>
                     Add kitchen
                 </Link>
             </div>
@@ -45,7 +45,6 @@ export default async function OwnerPage() {
                             {r.cuisine.join(", ")} · ~{r.avgPrepMins} min
                         </p>
 
-                        {/* bind(null, r.id): action ko is kitchen ka id pehle se de diya */}
                         <form action={toggleOpenAction.bind(null, r.id)}>
                             <Button type="submit" variant="outline" size="sm">
                                 {r.isOpen ? "Close kitchen" : "Open kitchen"}

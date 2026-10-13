@@ -38,9 +38,15 @@ export async function createRestaurantAction(
     await prisma.$transaction(async (tx) => {
         const restaurant = await tx.restaurant.create({
             data: {
-                ...data,
+                name: data.name,
                 description: description || null,
-                ownerId: user.id, // owner comes from session not from formData
+                address: data.address,
+                lat: data.lat,
+                long: data.lng,
+                cuisine: data.cuisine,
+                avgPrepMins: data.avgPrepMins,
+                isOpen: true,
+                ownerId: user.id,
             },
         });
 
