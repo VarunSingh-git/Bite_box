@@ -8,7 +8,7 @@ import { toggleOpenAction } from "./action";
 export default async function OwnerPage() {
     const user = await requireRole("OWNER");
 
-    // Sirf is owner ke kitchens, naye pehle
+    // only owner's new kitchen 
     const restaurants = await prisma.restaurant.findMany({
         where: { ownerId: user.id },
         orderBy: { createdAt: "desc" },

@@ -58,8 +58,8 @@ export async function createRestaurantAction(
     `;
     });
 
-    revalidatePath("/owner"); // list refresh
-    redirect("/owner");
+    revalidatePath("/owner"); // list refresh and delete cache so that udpated code should reflect on /owner
+    redirect("/owner"); // redirect to /owner after refresh list or dlt cache
 }
 
 export async function toggleOpenAction(restaurantId: string) {
@@ -67,7 +67,8 @@ export async function toggleOpenAction(restaurantId: string) {
 
     // Ownership check: find only their own kitchen
     const restaurant = await prisma.restaurant.findFirst({
-        where: { id: restaurantId, ownerId: user.id },
+        where: { id: restaurantId, ownerId: user.id }, 
+        // user can chnge id: restaurantId using dev tool but ownerId: user.id comes from db session so result will be null if data mismatch occur
         select: { id: true, isOpen: true },
     });
     if (!restaurant) return;
