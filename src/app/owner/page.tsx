@@ -4,15 +4,13 @@ import { Button } from "@/components/ui/button";
 import { requireRole } from "@/lib/guards";
 import { prisma } from "@/lib/prisma";
 import { toggleOpenAction } from "./action";
+import { getOwnerRestaurants } from "@/lib/queries";
 
 export default async function OwnerPage() {
     const user = await requireRole("OWNER");
-
+    
     // only owner's new kitchen 
-    const restaurants = await prisma.restaurant.findMany({
-        where: { ownerId: user.id },
-        orderBy: { createdAt: "desc" },
-    });
+    const restaurants = await getOwnerRestaurants(user.id);
 
     return (
         <main className="mx-auto max-w-3xl space-y-6 p-6">

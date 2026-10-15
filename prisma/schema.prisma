@@ -73,7 +73,7 @@ model MenuItems {
     restaurant   Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
     name         String
     description  String?
-    pricePaise   Float
+    pricePaise   Int
     category     String
     isVeg        Boolean     @default(true)
     isAvailable  Boolean     @default(true)

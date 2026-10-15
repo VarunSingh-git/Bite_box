@@ -32,5 +32,17 @@ export const restaurantSchema = z.object({
     avgPrepMins: z.coerce.number().int().min(5).max(180),
 });
 
+export const menuItemSchema = z.object({
+    name: z.string().min(2, "Dish name must be at least 2 characters"),
+    description: z.string().optional(),
+    // refine is used to add custom condition. 
+    price: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+        message: "Price must be a valid positive number"
+    }),
+    category: z.string().min(2, "Category is required (e.g. Starter, Main course)"),
+    isVeg: z.coerce.boolean(),
+})
+
+export type MenuItemSchema = z.infer<typeof menuItemSchema>
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registeredSchema>;
