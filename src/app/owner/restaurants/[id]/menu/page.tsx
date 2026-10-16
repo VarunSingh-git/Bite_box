@@ -5,7 +5,7 @@ import { notFound, redirect } from "next/navigation";
 import { MenuForm } from "./menu-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { toggleMenuItemAction, deleteMenuItemAction } from "./action";
+import { toggleMenuItemAvailability, deleteMenuItemAction } from "./action";
 import Link from "next/link";
 import { ArrowLeft, Trash2 } from "lucide-react";
 
@@ -72,7 +72,7 @@ export default async function OwnerMenuPage({
                                     <form
                                         action={async () => {
                                             "use server";
-                                            await toggleMenuItemAction(restaurant.id, item.id);
+                                            await toggleMenuItemAvailability(restaurant.id, item.id);
                                         }}
                                     >
                                         <Button

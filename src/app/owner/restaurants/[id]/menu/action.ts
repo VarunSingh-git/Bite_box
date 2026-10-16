@@ -31,6 +31,7 @@ export async function createMenuItem(restaurantId: string, preState: any, formDa
     const { name, description, price, category, isVeg } = parsed.data
 
     // Convert Rupees to Integer Paise (Rule #1)
+    // during calculation of floating-point numbers can cause big accounting errors.
     const priceInPaise = Math.round(parseFloat(price) * 100)
 
     try {
@@ -46,7 +47,7 @@ export async function createMenuItem(restaurantId: string, preState: any, formDa
             }
         })
 
-        revalidatePath("/owner/restaurants/{restaurantId}/menu")
+        revalidatePath(`/owner/restaurants/${restaurantId}/menu`)
         return { success: true, error: null }
     } catch (error) {
         console.error("Failed to create menu item:", error);
@@ -55,7 +56,7 @@ export async function createMenuItem(restaurantId: string, preState: any, formDa
 
 }
 
-export async function toggleMenuItemAction(restaurantId: string, menuItemId: string,) {
+export async function toggleMenuItemAvailability(restaurantId: string, menuItemId: string,) {
     const session = await auth();
     if (!session || session?.user.role !== "OWNER") {
         throw new Error("Unauthorized");

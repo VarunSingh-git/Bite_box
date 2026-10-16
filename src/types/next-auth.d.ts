@@ -20,7 +20,7 @@ declare module "next-auth" {
 }
 
 declare module "@auth/core/jwt" {
-    // same here we inject id and role in jswt payload
+    // same here we inject id and role in jwt payload
     interface JWT {
         id: string
         role: AppRole

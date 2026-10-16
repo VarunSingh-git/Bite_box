@@ -21,7 +21,6 @@ export async function registerAction(
         // image: formdata.get('image'),
         role: formdata.get('role') ?? "CUSTOMER"
     })
-    console.log("parsed from action.ts----------------------------", parsed)
     if (!parsed.success) {
         const issue = parsed.error.issues[0];
         return { error: `${issue?.path.join(".")}: ${issue?.message}` };
