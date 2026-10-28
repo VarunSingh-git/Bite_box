@@ -25,7 +25,7 @@ export async function getNearbyRestaurants(lat: number, long: number, radiusMete
     const cached = await redis.get(cacheKey)
     if (cached) return JSON.parse(cached)
 
-    // PostGIS Query using raw SQL (\$queryRaw)
+    // PostGIS Query using raw SQL ($queryRaw)
     // Rule 3: Longitude FIRST in ST_MakePoint(lng, lat)
 
     const results = await prisma.$queryRaw<any[]>`
