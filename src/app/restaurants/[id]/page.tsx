@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Utensils, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { AddToCartButton } from "@/components/AddToCartButton";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function RestaurantMenuPage({
@@ -83,7 +84,8 @@ async function RestaurantMenuContent({
                                 <span className="font-bold text-lg">
                                     ₹{(item.pricePaise / 100).toFixed(2)}
                                 </span>
-                                <Button size="sm">Add to Cart</Button>
+                                {/* <Button size="sm">Add to Cart</Button> */}
+                                <AddToCartButton item={item}/>
                             </CardContent>
                         </Card>
                     ))}

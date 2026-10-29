@@ -12,7 +12,7 @@ async function HomeContent() {
   const session = await auth();
   return (
     <div className="max-w-3xl space-y-6">
-      <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">
+      <div className="inline-flex items-center gap-2 bg-black/10 text-black px-3 py-1 rounded-full text-xs font-semibold">
         <Sparkles className="w-3.5 h-3.5" /> Homemade food, delivered hot to your doorstep
       </div>
 
@@ -35,7 +35,7 @@ async function HomeContent() {
           ) : (
             <Link href="/restaurants">
               <Button size="lg" className="gap-2">
-                <MapPin className="w-5 h-5" /> Explore Nearby Kitchens (Phase 6)
+                <MapPin className="w-5 h-5" /> Explore Nearby Kitchens
               </Button>
             </Link>
           )

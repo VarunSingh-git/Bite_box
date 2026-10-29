@@ -6,6 +6,7 @@ import { auth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UtensilsCrossed, LogOut, User, Store } from "lucide-react";
+import { CartButtonBadge } from "./CartButtonBadge";
 
 async function UserNav() {
     const session = await auth();
@@ -37,7 +38,7 @@ async function UserNav() {
             <div className="flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-xs font-medium">
                 <User className="w-3.5 h-3.5" />
                 <span>{session.user.name || session.user.email}</span>
-                <span className="bg-primary/20 text-primary px-1.5 py-0.5 rounded text-[10px]">
+                <span className="bg-black/20 text-black px-1.5 py-0.5 rounded text-[10px]">
                     {session.user.role}
                 </span>
             </div>
@@ -71,8 +72,8 @@ export function Navbar() {
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
                 {/* App Logo / Brand */}
-                <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-primary">
-                    <div className="bg-primary/10 p-2 rounded-xl text-primary">
+                <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-black">
+                    <div className="bg-black/10 p-2 rounded-xl text-black">
                         <UtensilsCrossed className="w-5 h-5" />
                     </div>
                     <span>Bite Box</span>
@@ -80,6 +81,9 @@ export function Navbar() {
 
                 {/* Navigation Links */}
                 <nav className="flex items-center gap-4">
+                    <Suspense fallback={<div className="w-20 h-9 bg-muted animate-pulse rounded-full" />}>
+                        <CartButtonBadge />
+                    </Suspense>
                     <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
                         Home
                     </Link>

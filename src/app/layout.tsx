@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { Toaster } from "sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +26,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full flex flex-col bg-background text-foreground`}>
-      {/* <Suspense fallback={< />}> */}
-                {/* <RestaurantList searchParams={searchParams} /> */}
-                <Navbar />
-            {/* </Suspense> */}
-        <main className="flex-1">{children}</main>
+        <Navbar />
+        <main className="flex-1">{children}
+          <Toaster richColors position="top-center" duration={1200} visibleToasts={1} />
+        </main>
         <footer className="border-t py-6 text-center text-xs text-muted-foreground">
           <p>© 2026 Bite Box.</p>
         </footer>

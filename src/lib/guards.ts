@@ -7,8 +7,10 @@ export type AppRole = "CUSTOMER" | "OWNER" | "ADMIN"
 export async function requireUser() {
     // auth is use for read session from server
     const session = await auth();
-    console.log("session from guards.ts ----------------------", session)
-    if (!session?.user?.id) redirect('/login')
+    if (!session?.user?.id) {
+        console.log("session from guards.ts ----------------------", session)
+        redirect('/login')
+    }
 
     return session?.user;
 }

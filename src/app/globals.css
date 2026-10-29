@@ -1,29 +1,75 @@
 @import "tailwindcss";
 
+:root {
+  /* Clean Light Gray/Blue Background */
+  --background: 210 40% 98%;
+  --foreground: 222.2 84% 4.9%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+
+  /* Vibrant Warm Orange Primary Accent (Appetizing & Modern) */
+  --primary: 24.6 95% 53.1%;
+  --primary-foreground: 60 9.1% 97.8%;
+
+  /* Crisp Light Blue Secondary Tint */
+  --secondary: 213.8 100% 96.9%;
+  --secondary-foreground: 221.2 83.2% 53.3%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --accent: 213.8 100% 96.9%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 24.6 95% 53.1%;
+
+  --radius: 0.875rem;
+}
+
 @theme {
-  /* Zomato Signature Vibrant Red Theme */
-  --color-primary: #E23744;
-  --color-primary-foreground: #ffffff;
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
 
-  /* Background and Foreground mapping for Tailwind v4 */
-  --color-background: #ffffff;
-  --color-foreground: #1c1c1c;
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
 
-  --color-card: #ffffff;
-  --color-card-foreground: #1c1c1c;
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
 
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--color-secondary-foreground));
 
-  --color-border: #e4e4e7;
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
 
-  --radius: 0.75rem;
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 
 @layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: system-ui, -apple-system, sans-serif;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }

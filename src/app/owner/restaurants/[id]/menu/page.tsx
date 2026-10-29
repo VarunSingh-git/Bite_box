@@ -80,7 +80,7 @@ export default async function OwnerMenuPage({
                                             variant={item.isAvailable ? "default" : "secondary"}
                                             size="sm"
                                         >
-                                            {item.isAvailable ? "Available" : "Hidden"}
+                                            {item.isAvailable ? "Available" : "Unavailable"}
                                         </Button>
                                     </form>
 
