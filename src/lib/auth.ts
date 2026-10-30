@@ -48,6 +48,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     email: user.email,
                     image: user.image,
                     role: user.role,
+                    lat: user.lat,
+                    long: user.long
                 };
             },
         }),
@@ -82,10 +84,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     if (dbUser) {
                         token.id = dbUser.id;
                         token.role = dbUser.role;
+                        token.lat = dbUser.lat;
+                        token.long = dbUser.long
                     }
                 } else {
                     token.id = user.id as string;
                     token.role = user.role;
+                    token.lat = user.lat as number | null;
+                    token.long = user.long as number | null
                 }
             }
             return token;
@@ -93,6 +99,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         async session({ session, token }) {
             session.user.id = token.id;
             session.user.role = token.role;
+            session.user.lat = token.lat as number | null;  
+            session.user.long = token.long as number | null;
             return session;
         },
     },

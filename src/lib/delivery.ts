@@ -1,3 +1,6 @@
+
+import { prisma } from "@/lib/prisma";
+
 interface DeliveryFeeParams {
     distanceKm: number, // distance b/w user and Restaurant
     cartTotalPaise: number, // cart total value in paise
@@ -27,7 +30,7 @@ export function calculateDeliveryFee({
 
     // 2. Time-of-Day Surge Pricing
     // Night Surge: 11 PM (23:00) to 6 AM (06:00) -> +₹30 extra
-    if (orderHour >= 23 || orderHour < 6) { 
+    if (orderHour >= 23 || orderHour < 6) {
         deliveryFeePaise += 3000
     }
     // Peak Noon / Dinner Hour Surge: 12 PM - 2 PM or 8 PM - 10 PM -> +₹15 extra
@@ -40,10 +43,10 @@ export function calculateDeliveryFee({
     let smallOrderFeePaise = 0
 
     if (cartTotalRupees <= 150) {
-        // Agar order chota hai (<= ₹150, jaise ₹20 ya ₹50), toh small order surcharge ya normal delivery lagegi
+        // if order less then ₹150, like ₹20 or ₹50), then small order surcharge or normal delivery charge applicable
         smallOrderFeePaise = 2000; // ₹20 extra handling fee for micro-orders
     } else if (cartTotalRupees >= 200) {
-        // Agar order ₹200 se upar hai, toh delivery bilkul FREE!
+        // if order more then 200 then delivery is free
         deliveryFeePaise = 0;
         isFreeDelivery = true;
     }
@@ -55,4 +58,26 @@ export function calculateDeliveryFee({
         isFreeDelivery,
         smallOrderFeePaise,
     };
+}
+
+// find the distance b/w Restaurant and User using theri coordinates
+export async function getRestaurantDistanceKm(restaurantId: string, userLat: number, userLng: number): Promise<number> {
+    try {
+        type DistanceResult = { distance_km: number }
+        // PostGIS ST_Distance sphere query (returns distance in meters, so divide by 1000 for KM)
+        const result = await prisma.$queryRaw<DistanceResult[]>
+            `
+            SELECT ST_Distance(
+                ST_SetSRID(ST_MakePoint(${userLng}, ${userLat}), 4326)::geography,
+                ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)::geography
+            ) / 1000 AS distance_km
+            FROM "Restaurant"
+            WHERE id = ${restaurantId};
+        `;
+
+        return result[0]?.distance_km || 2.5; // Fallback query if fail
+    } catch (error) {
+        console.error("Error calculating spatial distance:", error);
+        return 2.5; // Fallback safety
+    }
 }

@@ -40,6 +40,8 @@ model User {
     email        String        @unique
     passwordHash String?
     image        String?
+    lat          Float?
+    long         Float?
     role         Role
     createdAt    DateTime      @default(now())
     restaurants  Restaurant[]

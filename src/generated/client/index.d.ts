@@ -1544,8 +1544,20 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    lat: number | null
+    long: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    lat: number | null
+    long: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1554,6 +1566,8 @@ export namespace Prisma {
     email: string | null
     passwordHash: string | null
     image: string | null
+    lat: number | null
+    long: number | null
     role: $Enums.Role | null
     createdAt: Date | null
   }
@@ -1564,6 +1578,8 @@ export namespace Prisma {
     email: string | null
     passwordHash: string | null
     image: string | null
+    lat: number | null
+    long: number | null
     role: $Enums.Role | null
     createdAt: Date | null
   }
@@ -1574,6 +1590,8 @@ export namespace Prisma {
     email: number
     passwordHash: number
     image: number
+    lat: number
+    long: number
     role: number
     createdAt: number
     orderStatus: number
@@ -1581,12 +1599,24 @@ export namespace Prisma {
   }
 
 
+  export type UserAvgAggregateInputType = {
+    lat?: true
+    long?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    lat?: true
+    long?: true
+  }
+
   export type UserMinAggregateInputType = {
     id?: true
     name?: true
     email?: true
     passwordHash?: true
     image?: true
+    lat?: true
+    long?: true
     role?: true
     createdAt?: true
   }
@@ -1597,6 +1627,8 @@ export namespace Prisma {
     email?: true
     passwordHash?: true
     image?: true
+    lat?: true
+    long?: true
     role?: true
     createdAt?: true
   }
@@ -1607,6 +1639,8 @@ export namespace Prisma {
     email?: true
     passwordHash?: true
     image?: true
+    lat?: true
+    long?: true
     role?: true
     createdAt?: true
     orderStatus?: true
@@ -1651,6 +1685,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1681,6 +1727,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -1691,10 +1739,14 @@ export namespace Prisma {
     email: string
     passwordHash: string | null
     image: string | null
+    lat: number | null
+    long: number | null
     role: $Enums.Role
     createdAt: Date
     orderStatus: $Enums.OrderStatus[]
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1719,6 +1771,8 @@ export namespace Prisma {
     email?: boolean
     passwordHash?: boolean
     image?: boolean
+    lat?: boolean
+    long?: boolean
     role?: boolean
     createdAt?: boolean
     orderStatus?: boolean
@@ -1733,6 +1787,8 @@ export namespace Prisma {
     email?: boolean
     passwordHash?: boolean
     image?: boolean
+    lat?: boolean
+    long?: boolean
     role?: boolean
     createdAt?: boolean
     orderStatus?: boolean
@@ -1744,6 +1800,8 @@ export namespace Prisma {
     email?: boolean
     passwordHash?: boolean
     image?: boolean
+    lat?: boolean
+    long?: boolean
     role?: boolean
     createdAt?: boolean
     orderStatus?: boolean
@@ -1755,12 +1813,14 @@ export namespace Prisma {
     email?: boolean
     passwordHash?: boolean
     image?: boolean
+    lat?: boolean
+    long?: boolean
     role?: boolean
     createdAt?: boolean
     orderStatus?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "image" | "role" | "createdAt" | "orderStatus", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "image" | "lat" | "long" | "role" | "createdAt" | "orderStatus", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     restaurants?: boolean | User$restaurantsArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
@@ -1781,6 +1841,8 @@ export namespace Prisma {
       email: string
       passwordHash: string | null
       image: string | null
+      lat: number | null
+      long: number | null
       role: $Enums.Role
       createdAt: Date
       orderStatus: $Enums.OrderStatus[]
@@ -2214,6 +2276,8 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly image: FieldRef<"User", 'String'>
+    readonly lat: FieldRef<"User", 'Float'>
+    readonly long: FieldRef<"User", 'Float'>
     readonly role: FieldRef<"User", 'Role'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly orderStatus: FieldRef<"User", 'OrderStatus[]'>
@@ -4657,7 +4721,7 @@ export namespace Prisma {
     readonly restaurantId: FieldRef<"MenuItems", 'String'>
     readonly name: FieldRef<"MenuItems", 'String'>
     readonly description: FieldRef<"MenuItems", 'String'>
-    readonly pricePaise: FieldRef<"MenuItems", 'Float'>
+    readonly pricePaise: FieldRef<"MenuItems", 'Int'>
     readonly category: FieldRef<"MenuItems", 'String'>
     readonly isVeg: FieldRef<"MenuItems", 'Boolean'>
     readonly isAvailable: FieldRef<"MenuItems", 'Boolean'>
@@ -8614,6 +8678,8 @@ export namespace Prisma {
     email: 'email',
     passwordHash: 'passwordHash',
     image: 'image',
+    lat: 'lat',
+    long: 'long',
     role: 'role',
     createdAt: 'createdAt',
     orderStatus: 'orderStatus'
@@ -8741,6 +8807,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Role'
    */
   export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
@@ -8779,20 +8859,6 @@ export namespace Prisma {
    * Reference to a field of type 'OrderStatus'
    */
   export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -8843,6 +8909,8 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     passwordHash?: StringNullableFilter<"User"> | string | null
     image?: StringNullableFilter<"User"> | string | null
+    lat?: FloatNullableFilter<"User"> | number | null
+    long?: FloatNullableFilter<"User"> | number | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     orderStatus?: EnumOrderStatusNullableListFilter<"User">
@@ -8856,6 +8924,8 @@ export namespace Prisma {
     email?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
+    lat?: SortOrderInput | SortOrder
+    long?: SortOrderInput | SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     orderStatus?: SortOrder
@@ -8872,6 +8942,8 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     passwordHash?: StringNullableFilter<"User"> | string | null
     image?: StringNullableFilter<"User"> | string | null
+    lat?: FloatNullableFilter<"User"> | number | null
+    long?: FloatNullableFilter<"User"> | number | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     orderStatus?: EnumOrderStatusNullableListFilter<"User">
@@ -8885,12 +8957,16 @@ export namespace Prisma {
     email?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
+    lat?: SortOrderInput | SortOrder
+    long?: SortOrderInput | SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     orderStatus?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -8902,6 +8978,8 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    lat?: FloatNullableWithAggregatesFilter<"User"> | number | null
+    long?: FloatNullableWithAggregatesFilter<"User"> | number | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     orderStatus?: EnumOrderStatusNullableListFilter<"User">
@@ -9013,7 +9091,7 @@ export namespace Prisma {
     restaurantId?: StringFilter<"MenuItems"> | string
     name?: StringFilter<"MenuItems"> | string
     description?: StringNullableFilter<"MenuItems"> | string | null
-    pricePaise?: FloatFilter<"MenuItems"> | number
+    pricePaise?: IntFilter<"MenuItems"> | number
     category?: StringFilter<"MenuItems"> | string
     isVeg?: BoolFilter<"MenuItems"> | boolean
     isAvailable?: BoolFilter<"MenuItems"> | boolean
@@ -9044,7 +9122,7 @@ export namespace Prisma {
     restaurantId?: StringFilter<"MenuItems"> | string
     name?: StringFilter<"MenuItems"> | string
     description?: StringNullableFilter<"MenuItems"> | string | null
-    pricePaise?: FloatFilter<"MenuItems"> | number
+    pricePaise?: IntFilter<"MenuItems"> | number
     category?: StringFilter<"MenuItems"> | string
     isVeg?: BoolFilter<"MenuItems"> | boolean
     isAvailable?: BoolFilter<"MenuItems"> | boolean
@@ -9078,7 +9156,7 @@ export namespace Prisma {
     restaurantId?: StringWithAggregatesFilter<"MenuItems"> | string
     name?: StringWithAggregatesFilter<"MenuItems"> | string
     description?: StringNullableWithAggregatesFilter<"MenuItems"> | string | null
-    pricePaise?: FloatWithAggregatesFilter<"MenuItems"> | number
+    pricePaise?: IntWithAggregatesFilter<"MenuItems"> | number
     category?: StringWithAggregatesFilter<"MenuItems"> | string
     isVeg?: BoolWithAggregatesFilter<"MenuItems"> | boolean
     isAvailable?: BoolWithAggregatesFilter<"MenuItems"> | boolean
@@ -9319,6 +9397,8 @@ export namespace Prisma {
     email: string
     passwordHash?: string | null
     image?: string | null
+    lat?: number | null
+    long?: number | null
     role: $Enums.Role
     createdAt?: Date | string
     orderStatus?: UserCreateorderStatusInput | $Enums.OrderStatus[]
@@ -9332,6 +9412,8 @@ export namespace Prisma {
     email: string
     passwordHash?: string | null
     image?: string | null
+    lat?: number | null
+    long?: number | null
     role: $Enums.Role
     createdAt?: Date | string
     orderStatus?: UserCreateorderStatusInput | $Enums.OrderStatus[]
@@ -9345,6 +9427,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -9358,6 +9442,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -9371,6 +9457,8 @@ export namespace Prisma {
     email: string
     passwordHash?: string | null
     image?: string | null
+    lat?: number | null
+    long?: number | null
     role: $Enums.Role
     createdAt?: Date | string
     orderStatus?: UserCreateorderStatusInput | $Enums.OrderStatus[]
@@ -9382,6 +9470,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -9393,6 +9483,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -9540,7 +9632,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -9554,7 +9646,7 @@ export namespace Prisma {
     restaurantId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -9578,7 +9670,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -9590,7 +9682,7 @@ export namespace Prisma {
     restaurantId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -9861,6 +9953,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type EnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -9918,9 +10021,16 @@ export namespace Prisma {
     email?: SortOrder
     passwordHash?: SortOrder
     image?: SortOrder
+    lat?: SortOrder
+    long?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     orderStatus?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    lat?: SortOrder
+    long?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -9929,6 +10039,8 @@ export namespace Prisma {
     email?: SortOrder
     passwordHash?: SortOrder
     image?: SortOrder
+    lat?: SortOrder
+    long?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
   }
@@ -9939,8 +10051,15 @@ export namespace Prisma {
     email?: SortOrder
     passwordHash?: SortOrder
     image?: SortOrder
+    lat?: SortOrder
+    long?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    lat?: SortOrder
+    long?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9977,6 +10096,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -10425,6 +10560,14 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
   }
@@ -10857,6 +11000,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -10929,6 +11083,22 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -11197,6 +11367,8 @@ export namespace Prisma {
     email: string
     passwordHash?: string | null
     image?: string | null
+    lat?: number | null
+    long?: number | null
     role: $Enums.Role
     createdAt?: Date | string
     orderStatus?: UserCreateorderStatusInput | $Enums.OrderStatus[]
@@ -11209,6 +11381,8 @@ export namespace Prisma {
     email: string
     passwordHash?: string | null
     image?: string | null
+    lat?: number | null
+    long?: number | null
     role: $Enums.Role
     createdAt?: Date | string
     orderStatus?: UserCreateorderStatusInput | $Enums.OrderStatus[]
@@ -11309,6 +11483,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -11321,6 +11497,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -11351,7 +11529,7 @@ export namespace Prisma {
     restaurantId?: StringFilter<"MenuItems"> | string
     name?: StringFilter<"MenuItems"> | string
     description?: StringNullableFilter<"MenuItems"> | string | null
-    pricePaise?: FloatFilter<"MenuItems"> | number
+    pricePaise?: IntFilter<"MenuItems"> | number
     category?: StringFilter<"MenuItems"> | string
     isVeg?: BoolFilter<"MenuItems"> | boolean
     isAvailable?: BoolFilter<"MenuItems"> | boolean
@@ -11514,6 +11692,8 @@ export namespace Prisma {
     email: string
     passwordHash?: string | null
     image?: string | null
+    lat?: number | null
+    long?: number | null
     role: $Enums.Role
     createdAt?: Date | string
     orderStatus?: UserCreateorderStatusInput | $Enums.OrderStatus[]
@@ -11526,6 +11706,8 @@ export namespace Prisma {
     email: string
     passwordHash?: string | null
     image?: string | null
+    lat?: number | null
+    long?: number | null
     role: $Enums.Role
     createdAt?: Date | string
     orderStatus?: UserCreateorderStatusInput | $Enums.OrderStatus[]
@@ -11642,6 +11824,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -11654,6 +11838,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    long?: NullableFloatFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderStatus?: UserUpdateorderStatusInput | $Enums.OrderStatus[]
@@ -11866,7 +12052,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -11879,7 +12065,7 @@ export namespace Prisma {
     restaurantId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -12097,7 +12283,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -12109,7 +12295,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
@@ -12121,7 +12307,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    pricePaise?: FloatFieldUpdateOperationsInput | number
+    pricePaise?: IntFieldUpdateOperationsInput | number
     category?: StringFieldUpdateOperationsInput | string
     isVeg?: BoolFieldUpdateOperationsInput | boolean
     isAvailable?: BoolFieldUpdateOperationsInput | boolean

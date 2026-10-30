@@ -16,7 +16,6 @@ interface AddToCartButton {
 
 export function AddToCartButton({ item }: AddToCartButton) {
     const [IsLoading, setIsLoading] = useState(false)
-    const [btnValue, setBtnValue] = useState("")
     const [isSuccess, setIsSuccess] = useState(false);
 
     const handleAddCart = async () => {
@@ -28,7 +27,30 @@ export function AddToCartButton({ item }: AddToCartButton) {
             })
 
             if (res && res.error) {
-                toast.error(res.error); // Error Toast
+                toast.error(res.error, {
+                    duration: 5000,
+                    action: {
+                        label: "Yes, Start fresh",
+                        onClick: async () => {
+
+                            const freshRes = await addToCart({
+                                ...item,
+                                quantity: 1 // Default quantity 1
+                            }, true)
+
+                            if (freshRes && freshRes.error) {
+                                toast.error(freshRes.error)
+                            } else {
+                                setIsSuccess(true)
+                                toast.success("Cart cleared and new item added")
+                                setTimeout(() => {
+                                    setIsSuccess(false)
+                                }, 800)
+                            }
+
+                        }
+                    }
+                });
             } else {
                 setIsSuccess(true);
                 toast.success(`${item.name} added to cart!`);

@@ -5,21 +5,25 @@ import { getCart, saveCart, CartItem } from "./cart"
 import { revalidatePath } from "next/cache"
 import { requireUser } from "./guards";
 
-export async function addToCart(item: CartItem) {
+export async function addToCart(item: CartItem, forceClear: boolean = false) {
     const session = await requireUser();
-    if(!session.id) return null
+    if (!session.id) return null
     const userId = session?.id
     if (!userId) return { error: "Unauthenticate, Please login again" }
 
     const cart = await getCart(userId)
     // Rule: If cart has items from a DIFFERENT restaurant, clear or prompt
-    if (cart.restaurantId && cart.restaurantId !== item.restaurantId) {
+    if (cart.restaurantId && cart.restaurantId !== item.restaurantId && !forceClear) {
         return {
             success: false,
-            error: "Your cart contain items from another kitchen. Clear cart to switch kitchen"
+            error: "Do you want to clear your cart and start a fresh one ?",
+            cart
         }
     }
-
+    if (forceClear) {
+        cart.item = [];
+        cart.restaurantId = null;
+    }
     // we put restaurantId in cart from item.restaurantId 
     cart.restaurantId = item.restaurantId
 

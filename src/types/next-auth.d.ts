@@ -10,12 +10,16 @@ declare module "next-auth" {
         user: {
             id: string
             role: AppRole
+            lat?: number | null
+            long?: number | null
         } & DefaultSession['user']
     }
 
     // this is where we get user.role when user is authenticate
     interface User {
         role: AppRole
+        lat?: number | null
+        long?: number | null
     }
 }
 
@@ -24,5 +28,7 @@ declare module "@auth/core/jwt" {
     interface JWT {
         id: string
         role: AppRole
+        lat?: number | null;
+        long?: number | null;
     }
 }

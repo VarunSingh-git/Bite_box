@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "MenuItems" ALTER COLUMN "pricePaise" SET DATA TYPE INTEGER;

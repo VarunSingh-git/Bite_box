@@ -50,6 +50,10 @@ async function CartContent() {
 
     const totalPaise = cart.item.reduce((sum, item) => sum + (item.pricePaise * item.quantity), 0);
 
+    // User ke coordinates session ya database se lein (Example user location: Mohali coordinates)
+    const userLat = session || 30.7046; 
+    const userLng = session || 76.7179;
+
     // Calculate dynamic delivery fee (Assuming estimated distance is 2.5 KM for now)
     const estimatedDistanceKm = 2.5;
     const { deliveryFeePaise, isFreeDelivery, smallOrderFeePaise } = calculateDeliveryFee({

@@ -8,6 +8,7 @@ export async function CartButtonBadge() {
   if (!session?.user?.id) return null;
 
   const cart = await getCart(session?.user?.id);
+  console.log(cart)
   const totalItems = cart.item.reduce((sum, item) => sum + item.quantity, 0);
 
   if (totalItems === 0) return null;
@@ -18,7 +19,7 @@ export async function CartButtonBadge() {
         <ShoppingCart className="w-4 h-4" />
         <span>Go to Cart</span>
         <span className="bg-white text-primary text-xs font-bold px-2 py-0.5 rounded-full">
-          {totalItems}
+          {cart.item.length}
         </span>
       </div>
     </Link>
