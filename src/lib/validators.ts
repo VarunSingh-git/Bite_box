@@ -9,6 +9,7 @@ export const registeredSchema = z.object({
     name: z.string().trim().min(2).max(40),
     email: z.email().toLowerCase().trim(),
     password: z.string().min(8).max(72),
+    confirmPassword: z.string().min(8).max(72),
     role: z.enum(["CUSTOMER", "OWNER"]).default("CUSTOMER"),
     lat: z.string().trim().optional(),
     long: z.string().trim().optional()

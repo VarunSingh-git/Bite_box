@@ -8,6 +8,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { Skeleton } from "@/components/ui/skeleton";
+import { calculateDeliveryFee } from "@/lib/delivery";
+import { requireUser } from "@/lib/guards";
+import { calculateHaversineDistance } from "@/lib/delivery";
 
 export default async function RestaurantMenuPage({
     params,
@@ -49,6 +52,24 @@ async function RestaurantMenuContent({
         notFound();
     }
 
+    // Get logged-in user's location
+    const session = await requireUser();
+
+    const userLat = session?.lat ?? 30.7046;
+    const userLng = session?.long ?? 76.7179;
+
+    // Calculate actual delivery distance
+    let deliveryDistanceKm = 2.5;
+
+    if (restaurant.lat != null && restaurant.long != null) {
+        deliveryDistanceKm = calculateHaversineDistance(
+            userLat,
+            userLng,
+            restaurant.lat,
+            restaurant.long
+        );
+    }
+
     return (
         <>
             <div className="mb-8 border-b pb-6">
@@ -85,7 +106,10 @@ async function RestaurantMenuContent({
                                     ₹{(item.pricePaise / 100).toFixed(2)}
                                 </span>
                                 {/* <Button size="sm">Add to Cart</Button> */}
-                                <AddToCartButton item={item}/>
+                                <AddToCartButton
+                                    item={item}
+                                    deliveryDistanceKm={deliveryDistanceKm}
+                                />
                             </CardContent>
                         </Card>
                     ))}

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LocationDetector } from "./location-detector";
 import { Skeleton } from "@/components/ui/skeleton";
+import { LocationSaver } from "@/components/LocationSaver";
 
 export default async function RestaurantsPage({
     searchParams,

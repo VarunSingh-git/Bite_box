@@ -82,6 +82,15 @@ export function RegisterForm() {
                     minLength={8}
                     maxLength={72}
                 />
+                <Label htmlFor="password">Confirm Password</Label>
+                <PasswordInput
+                    id="password"
+                    name="confirm_password"
+                    autoComplete="new-password"
+                    required
+                    minLength={8}
+                    maxLength={72}
+                />
                 <p className="text-xs text-gray-500">At least 8 characters.</p>
             </div>
 

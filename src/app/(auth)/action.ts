@@ -18,7 +18,7 @@ export async function registerAction(
         name: formdata.get('name'),
         email: formdata.get('email'),
         password: formdata.get('password'),
-        // image: formdata.get('image'),
+        confirmPassword: formdata.get('confirm_password'),
         role: formdata.get('role') ?? "CUSTOMER",
         lat: formdata.get('lat'),
         long: formdata.get('long')
@@ -28,14 +28,22 @@ export async function registerAction(
         return { error: `${issue?.path.join(".")}: ${issue?.message}` };
     }
 
-    const { name, email, password, role, lat, long } = parsed.data;
+    const { name, email, password,confirmPassword, role, lat, long } = parsed.data;
     const existing = await prisma.user.findUnique({ where: { email } })
     if (existing) return { error: "An account with this email is already exists" }
-
+if(password!==confirmPassword) return { error: "Password and Confirm password should be same" }
     const passwordHash = await bcrypt.hash(password, 10)
     const parsedLat = lat ? parseFloat(lat) : null;
     const parsedLong = long ? parseFloat(long) : null;
-    await prisma.user.create({ data: { name, email, passwordHash, role, lat: parsedLat && !isNaN(parsedLat) ? parsedLat : null, long: parsedLong && !isNaN(parsedLong) ? parsedLong : null, parsedLong } })
+    await prisma.user.create({ 
+        data: 
+        {   name, 
+            email, 
+            passwordHash, 
+            role, 
+            lat: parsedLat && !isNaN(parsedLat) ? parsedLat : null, 
+            long: parsedLong && !isNaN(parsedLong) ? parsedLong : null,
+        } })
 
     redirect("/login?registered=1")
 }

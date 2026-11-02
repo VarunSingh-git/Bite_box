@@ -26,7 +26,8 @@ export function LocationDetector() {
             const lat = position.coords.latitude
             const lng = position.coords.longitude
             setLoading(false)
-            router.push(`/restaurants?lat=${lat}&lng=${lng}`)
+            const routeUrl = `/restaurants?lat=${lat}&lng=${lng}`
+            router.push(routeUrl)
         },
         (err) => {
             setLoading(false);

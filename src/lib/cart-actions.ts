@@ -4,6 +4,7 @@
 import { getCart, saveCart, CartItem } from "./cart"
 import { revalidatePath } from "next/cache"
 import { requireUser } from "./guards";
+import { it } from "node:test";
 
 export async function addToCart(item: CartItem, forceClear: boolean = false) {
     const session = await requireUser();
@@ -37,9 +38,12 @@ export async function addToCart(item: CartItem, forceClear: boolean = false) {
         cart.item.push(item)
     }
     await saveCart(userId, cart);
+    const totalPaise = cart.item.reduce((sum, item) => sum + (item.pricePaise * item.quantity), 0)
+    
     revalidatePath(`/restaurant/${item.restaurantId}`)
+    revalidatePath("/cart");
 
-    return { success: true, cart }
+    return { success: true, cart, totalPaise }
 }
 
 export async function updateCartQuantity(itemId: string, itemQuantity: number) {
